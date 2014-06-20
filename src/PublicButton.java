@@ -30,8 +30,11 @@ public class PublicButton extends JButton implements MouseListener {
 	/**数字ボタンがクリックされたときに表示する数クラスに数字を渡す*/
 	public void mouseClicked(MouseEvent e) {
 		
-		textField.tmp +=  string; 
+		textField.tmp +=  string;
+		
+		//桁を増やす
 		textField.addString(string);
+		
 		Calc.last_click='P';
 	}
 

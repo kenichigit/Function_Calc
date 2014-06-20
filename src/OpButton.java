@@ -25,15 +25,10 @@ public class OpButton extends JButton implements MouseListener {
 		/**表示する数の桁を増やす*/
 		textField.addString(operator);
 		
+		Calc.last_click = 'O';
+		
 		/**後置記法の為の操作*/
 		textField.RPN_transform(operator);
-		
-		if(operator.equals("(")){
-			Calc.last_click = '(';
-		}
-		else if(operator.equals("")){
-			Calc.last_click = 'O';
-		}
 		
 		textField.tmp = "";
 		

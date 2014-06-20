@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 import javax.swing.JTextField;
 /**表示画面
  * 数式の入力、結果の出力を行う
@@ -5,7 +7,12 @@ import javax.swing.JTextField;
 
 public class CalcTextField extends JTextField{
 	
-	String tmp;
+	String tmp="";	//数値を一時的に入れる
+	String[] RPN = new String[100];       //ポーランド記法を作る配列
+	String[] op = new String[100];        //一時的に演算子,「()」を格納する配列
+	int i = 0,j = 0;
+	boolean[] flag = new boolean[100];
+
 	
 	public CalcTextField() {
 		super("");
@@ -21,17 +28,130 @@ public class CalcTextField extends JTextField{
 	}
 	/** 表示する数を0にする */
 	public void clear(){
+		/*表示する数をリセット*/
 		this.setText("");
+		/*後置記法配列を初期化*/
+		Arrays.fill(RPN,null);
+		i=j=0;
 	}
 	
 	/**数式を後置記法に変換*/
-	public void RPN_transform(String oreprator){
+	public void RPN_transform(String operator){
 		this.getText();
+		
+		if(Calc.last_click =='O'||Calc.last_click =='='){   //☆演算記号が押される
+			if(tmp != ""){
+			RPN[i] = tmp;//数字を入れる
+			flag[i] = true;
+			i++;
+			}
+			
+			if(Calc.last_click =='O'){
+			op[j] = operator;
+			j++;
+			}
+			
+			if(j>=2){	
+				if((op[j-2]=="×"||op[j-2]=="÷") && (op[j-1]=="＋"||op[j-1]=="－")){//op[]の中で、「×」か「/」が一個前に入っているときに「＋」か「ー」が入る。
+		        //演算子の優先順位で入れ替え
+		    		RPN[i] = op[j-2];
+					flag[i] = false;
+		    		i++;
+		    		op[j-2] = op[j-1];
+		    		op[j-2] = null;
+		    	}
+			}
+			
+			if(operator == ")"){                //「)」が入力されたとき
+				for(;;){
+					if(op[j] == "("){//「(」が出てくるまでRPNの後ろにopの先頭を入れる
+						break;
+					}else{
+						RPN[i] = op[j-1];
+						flag[i] = false;
+						i++;
+						j--;
+						
+						if(RPN[i-1]=="(" || RPN[i-1]==")"){
+							i--;
+						}
+					}
+				}
+			}
+			
+			if(operator.equals("=")){                      //「＝」が入ったらopに入ってる記号をRPNに入れる
+				for(;;){
+					RPN[i] = op[j-1];	
+					flag[i] = false;
+					i++;
+					j--;
+					if(j==0){                    //opが空になったら終了
+						break;    
+					}
+				}
+			}
+		}//☆演算記号が押されたときの処理終了
 		
 	}
 	
+	
+	
 	/**演算を行う*/
-	public void operation(){
-
+	public  void operation(String[] RPN,boolean[] Flag){
+		
+		String ans;
+	
+		for(int i=0;Flag[1];i++){
+			if(Flag[i]&&Flag[i+1]&&(!Flag[i+2])){
+				if(RPN[i+2].equals("＋")){
+					RPN[i] = ""+(Double.parseDouble(RPN[i]) + Double.parseDouble(RPN[i+1]));
+					for(int j=i;j<RPN.length-3;j++){
+						RPN[j+1] = RPN[j+3];
+					}
+					i=-1;
+					System.out.println(Arrays.toString(RPN));
+				}
+				if(RPN[i+2].equals("ー")){
+					RPN[i] = ""+(Double.parseDouble(RPN[i]) - Double.parseDouble(RPN[i+1]));
+					for(int j=i;j<RPN.length-3;j++){
+						RPN[j+1] = RPN[j+3];
+						Flag[j+1] = Flag[j+3];
+					}
+					i=-1;
+					System.out.println(Arrays.toString(RPN));
+				}
+				if(RPN[i+2].equals("×")){
+					RPN[i] = ""+(Double.parseDouble(RPN[i]) * Double.parseDouble(RPN[i+1]));
+					for(int j=i;j<RPN.length-3;j++){
+						RPN[j+1] = RPN[j+3];
+						Flag[j+1] = Flag[j+3];
+					}
+					i=-1;
+					System.out.println(Arrays.toString(RPN));
+				}
+				if(RPN[i+2].equals("÷")){
+					RPN[i] = ""+(Double.parseDouble(RPN[i]) / Double.parseDouble(RPN[i+1]));
+					for(int j=i;j<RPN.length-3;j++){
+						RPN[j+1] = RPN[j+3];
+						Flag[j+1] = Flag[j+3];
+					}
+					i=-1;
+					System.out.println(Arrays.toString(RPN));
+				}
+				if(RPN[i+3].equals("^")){
+					RPN[i] = ""+Math.pow(Double.parseDouble(RPN[i]), Double.parseDouble(RPN[i+1]));
+					for(int j=i;j<RPN.length-2;j++){
+						RPN[i+1] = RPN[i+3];
+						Flag[j+1] = Flag[j+3];
+					}
+					i=0;
+					System.out.println(Arrays.toString(RPN));
+				}	
+	
+			}
+		}	
+		this.setText(RPN[0]);
 	}
+
+
 }

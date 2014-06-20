@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
 
 /**イコールボタンクラス
  * 演算器(ArithmeticUnit)に演算を行わせるクラス。
@@ -30,6 +31,15 @@ public class EqualButton extends JButton implements MouseListener {
 	public void mouseClicked(MouseEvent e) {		
 		/*計算を実行*/
 		Calc.last_click ='=';
+		
+		/**後置記法に変換*/
+		textField.RPN_transform("=");
+		
+		textField.operation(textField.RPN, textField.flag);
+		
+		
+		textField.setText(textField.RPN[0]);
+		
 	}
     /** 今回は使用しない */
 	public void mouseEntered(MouseEvent e) {}
