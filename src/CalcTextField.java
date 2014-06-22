@@ -143,7 +143,7 @@ public class CalcTextField extends JTextField{
 					RPN[j+1] = RPN[j+3];
 					Flag[j+1] = Flag[j+3];
 				}
-				System.out.println(Arrays.toString(RPN));
+				//System.out.println(Arrays.toString(RPN));
 				i=0;
 			}
 			else i++;
