@@ -34,12 +34,13 @@ public class EqualButton extends JButton implements MouseListener {
 		
 		/**後置記法に変換*/
 		textField.RPN_transform("=");
-		System.out.println(textField.RPN);
 		
+		System.out.println(Arrays.toString(textField.RPN));//確認
+		
+		/**演算を行う*/
 		textField.operation(textField.RPN, textField.flag);
 		
-		
-		textField.setText(Arrays.toString(textField.RPN));
+		textField.setText(textField.RPN[0]);
 		
 	}
     /** 今回は使用しない */
