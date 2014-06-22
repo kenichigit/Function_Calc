@@ -8,7 +8,7 @@ import javax.swing.JTextField;
 public class CalcTextField extends JTextField{
 	
 	String tmp="";	//数値を一時的に入れる
-	String[] RPN = new String[100];       //ポーランド記法を作る配列
+	String[] RPN = new String[100];       //ポ-ランド記法を作る配列
 	String[] op = new String[100];        //一時的に演算子,「()」を格納する配列
 	int i = 0,j = 0;
 	boolean[] flag = new boolean[100];
@@ -16,7 +16,7 @@ public class CalcTextField extends JTextField{
 	
 	public CalcTextField() {
 		super("");
-		// TODO 自動生成されたコンストラクター・スタブ
+		// TODO 自動生成されたコンストラクタ-・スタブ
 	}
 	
 	/**　表示画面に加える */
@@ -52,7 +52,7 @@ public class CalcTextField extends JTextField{
 			}
 			
 			if(j>=2){	
-				if((op[j-2]=="×"||op[j-2]=="÷") && (op[j-1]=="＋"||op[j-1]=="－")){//op[]の中で、「×」か「/」が一個前に入っているときに「＋」か「ー」が入る。
+				if((op[j-2]=="*"||op[j-2]=="/") && (op[j-1]=="+"||op[j-1]=="－")){//op[]の中で、「*」か「/」が一個前に入っているときに「+」か「-」が入る。
 		        //演算子の優先順位で入れ替え
 		    		RPN[i] = op[j-2];
 					flag[i] = false;
@@ -99,59 +99,54 @@ public class CalcTextField extends JTextField{
 	/**演算を行う*/
 	public  void operation(String[] RPN,boolean[] Flag){
 		
-		String ans;
-	
-		for(int i=0;Flag[1];i++){
-			if(Flag[i]&&Flag[i+1]&&(!Flag[i+2])){
-				if(RPN[i+2].equals("＋")){
-					RPN[i] = ""+(Double.parseDouble(RPN[i]) + Double.parseDouble(RPN[i+1]));
-					for(int j=i;j<RPN.length-3;j++){
-						RPN[j+1] = RPN[j+3];
-					}
-					i=-1;
-					System.out.println(Arrays.toString(RPN));
-				}
-				if(RPN[i+2].equals("ー")){
-					RPN[i] = ""+(Double.parseDouble(RPN[i]) - Double.parseDouble(RPN[i+1]));
-					for(int j=i;j<RPN.length-3;j++){
-						RPN[j+1] = RPN[j+3];
-						Flag[j+1] = Flag[j+3];
-					}
-					i=-1;
-					System.out.println(Arrays.toString(RPN));
-				}
-				if(RPN[i+2].equals("×")){
-					RPN[i] = ""+(Double.parseDouble(RPN[i]) * Double.parseDouble(RPN[i+1]));
-					for(int j=i;j<RPN.length-3;j++){
-						RPN[j+1] = RPN[j+3];
-						Flag[j+1] = Flag[j+3];
-					}
-					i=-1;
-					System.out.println(Arrays.toString(RPN));
-				}
-				if(RPN[i+2].equals("÷")){
-					RPN[i] = ""+(Double.parseDouble(RPN[i]) / Double.parseDouble(RPN[i+1]));
-					for(int j=i;j<RPN.length-3;j++){
-						RPN[j+1] = RPN[j+3];
-						Flag[j+1] = Flag[j+3];
-					}
-					i=-1;
-					System.out.println(Arrays.toString(RPN));
-				}
-				if(RPN[i+3].equals("^")){
-					RPN[i] = ""+Math.pow(Double.parseDouble(RPN[i]), Double.parseDouble(RPN[i+1]));
-					for(int j=i;j<RPN.length-2;j++){
-						RPN[i+1] = RPN[i+3];
-						Flag[j+1] = Flag[j+3];
-					}
-					i=0;
-					System.out.println(Arrays.toString(RPN));
-				}	
-	
+		int len = 0;
+		//数値,演算子の個数lenはnullが見つかるまでのRPNの個数
+		for(int i=0;RPN[i]!=null;i++){
+			len++;
+		}
+		
+		/*############ e,πを数値に置き換える ##################*/			
+		for(int i=0;i<len;i++){
+			if(RPN[i].equals("e")){
+				RPN[i]=""+Math.E;
 			}
+		}
+		for(int i=0;i<len;i++){
+			if(RPN[i].equals("π")){
+				RPN[i]=""+Math.PI;
+			}
+		}
+		
+		/*############ 演算を行う ##################*/
+		char op=0;	
+		for(int i=0;Flag[1];){	//全ての計算が終わった時Flag[1]はfalseになる
+			if(Flag[i]&&Flag[i+1]&&(!Flag[i+2])){	//[数字,数字,演算子]の並びがあれば計算する
+				op = RPN[i+2].charAt(0);	//RPN[i+2]をcharにキャストしてopに代入 この時RPN[i+2]は演算子
+				switch(op){
+					case '+':
+						RPN[i] = ""+(Double.parseDouble(RPN[i]) + Double.parseDouble(RPN[i+1]));
+						break;
+					case '-':
+						RPN[i] = ""+(Double.parseDouble(RPN[i]) - Double.parseDouble(RPN[i+1]));
+						break;
+					case '*':
+						RPN[i] = ""+(Double.parseDouble(RPN[i]) * Double.parseDouble(RPN[i+1]));
+						break;
+					case '/':
+						RPN[i] = ""+(Double.parseDouble(RPN[i]) / Double.parseDouble(RPN[i+1]));
+						break;
+					case '^':
+						RPN[i] = ""+Math.pow(Double.parseDouble(RPN[i]), Double.parseDouble(RPN[i+1]));
+						break;
+				}
+				for(int j=i;j<RPN.length-3;j++){
+					RPN[j+1] = RPN[j+3];
+					Flag[j+1] = Flag[j+3];
+				}
+				System.out.println(Arrays.toString(RPN));
+				i=0;
+			}
+			else i++;
 		}	
-		this.setText(RPN[0]);
 	}
-
-
 }
