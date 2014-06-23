@@ -7,9 +7,9 @@ import javax.swing.JTextField;
 
 public class CalcTextField extends JTextField{
 	
-	String tmp="";	//数値を一時的に入れる
-	String[] RPN = new String[100];       //ポ-ランド記法を作る配列
-	String[] op = new String[100];        //一時的に演算子,「()」を格納する配列
+	String tmp="";		//数値を一時的に入れる
+	String[] RPN = new String[100];		//ポ-ランド記法を作る配列
+	String[] op = new String[100];		//一時的に演算子,「()」を格納する配列
 	int i = 0,j = 0;
 	boolean[] flag = new boolean[100];
 
@@ -32,66 +32,57 @@ public class CalcTextField extends JTextField{
 		this.setText("");
 		/*後置記法配列を初期化*/
 		Arrays.fill(RPN,null);
+		/*一時変数を初期化*/
 		i=j=0;
+		tmp="";
 	}
 	
 	/**数式を後置記法に変換*/
 	public void RPN_transform(String operator){
-		this.getText();
 		
-		if(Calc.last_click =='O'||Calc.last_click =='='){   //☆演算記号が押される
-			if(tmp != ""){
+		if(tmp != ""){
 			RPN[i] = tmp;//数字を入れる
 			flag[i] = true;
 			i++;
-			}
-			
-			if(Calc.last_click =='O'){
+		}
+		
+		if(Calc.last_click =='O'){
 			op[j] = operator;
 			j++;
-			}
-			
-			if(j>=2){	
-				if((op[j-2]=="*"||op[j-2]=="/") && (op[j-1]=="+"||op[j-1]=="－")){//op[]の中で、「*」か「/」が一個前に入っているときに「+」か「-」が入る。
-		        //演算子の優先順位で入れ替え
-		    		RPN[i] = op[j-2];
-					flag[i] = false;
-		    		i++;
-		    		op[j-2] = op[j-1];
-		    		op[j-2] = null;
-		    	}
-			}
-			
-			if(operator == ")"){                //「)」が入力されたとき
-				for(;;){
-					if(op[j] == "("){//「(」が出てくるまでRPNの後ろにopの先頭を入れる
-						break;
-					}else{
-						RPN[i] = op[j-1];
-						flag[i] = false;
-						i++;
-						j--;
-						
-						if(RPN[i-1]=="(" || RPN[i-1]==")"){
-							i--;
-						}
-					}
-				}
-			}
-			
-			if(operator.equals("=")){                      //「＝」が入ったらopに入ってる記号をRPNに入れる
-				for(;;){
-					RPN[i] = op[j-1];	
-					flag[i] = false;
-					i++;
-					j--;
-					if(j==0){                    //opが空になったら終了
-						break;    
-					}
-				}
-			}
-		}//☆演算記号が押されたときの処理終了
+		}
 		
+		if(j>=2){
+			//op[]の中で、「*」か「/」が一個前に入っているときに「+」か「-」が入る。
+			if((op[j-2]=="*"||op[j-2]=="/") && (op[j-1]=="+"||op[j-1]=="-")){
+				//演算子の優先順位で入れ替え
+	    		RPN[i] = op[j-2];
+				flag[i] = false;
+	    		i++;
+	    		op[j-2] = op[j-1];
+	    		op[j-2] = null;
+	    	}
+		}
+		
+		if(operator == ")"){	//「)」が入力されたとき
+			while(op[j] != "("){	//「(」が出てくるまでRPNの後ろにopの先頭を入れる
+				RPN[i] = op[j-1];
+				flag[i] = false;
+				i++;
+				j--;			
+				if(RPN[i-1]=="(" || RPN[i-1]==")"){
+					i--;
+				}
+			}
+		}
+			
+		if(operator.equals("=")){	//「＝」が入ったらopに入ってる記号をRPNに入れる
+			while(j!=0){	//opが空になったら終了
+				RPN[i] = op[j-1];	
+				flag[i] = false;
+				i++;
+				j--;
+			}
+		}
 	}
 	
 	
@@ -119,7 +110,7 @@ public class CalcTextField extends JTextField{
 		
 		/*############ 演算を行う ##################*/
 		char op=0;	
-		for(int i=0;Flag[1];){	//全ての計算が終わった時Flag[1]はfalseになる
+		for(int i=0;Flag[1];){	//全ての計算が終わった時Flag[1]は演算子(false)になる
 			if(Flag[i]&&Flag[i+1]&&(!Flag[i+2])){	//[数字,数字,演算子]の並びがあれば計算する
 				op = RPN[i+2].charAt(0);	//RPN[i+2]をcharにキャストしてopに代入 この時RPN[i+2]は演算子
 				switch(op){
@@ -144,9 +135,9 @@ public class CalcTextField extends JTextField{
 					Flag[j+1] = Flag[j+3];
 				}
 				//System.out.println(Arrays.toString(RPN));
-				i=0;
+				i=0;	//計算が行われたら、最初から検索
 			}
-			else i++;
+			else i++;	//計算が行われなかったら、次を検索
 		}	
 	}
 }

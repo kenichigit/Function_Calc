@@ -3,9 +3,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
 
-/**イコールボタンクラス
+/**イコ-ルボタンクラス
  * 演算器(ArithmeticUnit)に演算を行わせるクラス。
- * JButtonを拡張したクラスであり，MouseListenerインターフェースを実装している。
+ * JButtonを拡張したクラスであり，MouseListenerインタ-フェ-スを実装している。
  * プッシュボタンの「=」を押されることにより演算器クラス(ArithmeticUnit)に演算を行わせる。
  * */
 public class EqualButton extends JButton implements MouseListener {
@@ -25,7 +25,7 @@ public class EqualButton extends JButton implements MouseListener {
 		addMouseListener(this);
 	}
 
-	  /** コンポーネント上でマウスボタンがクリックされたときに動作し、
+	  /** コンポ-ネント上でマウスボタンがクリックされたときに動作し、
      * 演算器(ArithmeticUnit)に演算を行わせ、
      * 表示する数(DisplayedNumber)に演算器(ArithmeticUnit)から読み出した値を代入させる。 */
 	public void mouseClicked(MouseEvent e) {		
@@ -35,7 +35,7 @@ public class EqualButton extends JButton implements MouseListener {
 		/**後置記法に変換*/
 		textField.RPN_transform("=");
 		
-		System.out.println(textField.RPN);
+		System.out.println(Arrays.toString(textField.RPN));
 		
 		textField.operation(textField.RPN, textField.flag);
 		
