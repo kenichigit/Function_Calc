@@ -22,6 +22,13 @@ public class OpButton extends JButton implements MouseListener {
 	/** マウスで演算記号ボタンがクリックされると,演算器クラス(ArithmeticUnit)に選択された演算子を伝える。  */
 	public void mouseClicked(MouseEvent e) {
 		
+		/*演算子が連続で押された際、置き換える*/
+		String tmp;
+		if(Calc.last_click == 'O'){
+			tmp = textField.getText();
+			textField.setText(tmp.substring(0, tmp.length()-1) );
+		}
+		
 		/**表示する数の桁を増やす*/
 		textField.addString(operator);
 		

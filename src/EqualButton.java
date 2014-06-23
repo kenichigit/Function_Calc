@@ -1,4 +1,5 @@
 import javax.swing.*;
+
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
@@ -29,18 +30,24 @@ public class EqualButton extends JButton implements MouseListener {
      * 演算器(ArithmeticUnit)に演算を行わせ、
      * 表示する数(DisplayedNumber)に演算器(ArithmeticUnit)から読み出した値を代入させる。 */
 	public void mouseClicked(MouseEvent e) {		
-		/*計算を実行*/
+
 		Calc.last_click ='=';
 		
 		/**後置記法に変換*/
 		textField.RPN_transform("=");
 		
-		System.out.println(Arrays.toString(textField.RPN));
+		System.out.println(Arrays.toString(textField.RPN));	//確認用
 		
+		/**計算を行う*/
 		textField.operation(textField.RPN, textField.flag);
 		
+		if(Double.parseDouble(textField.RPN[0]) >= 1000000000){
+			textField.RPN[0] = Double.parseDouble(textField.RPN[0])/100 + "*10^9";
+		}
 		
 		textField.setText(textField.RPN[0]);
+		
+		textField.tmp = "";
 		
 	}
     /** 今回は使用しない */

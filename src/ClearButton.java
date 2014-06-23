@@ -15,7 +15,7 @@ public class ClearButton extends JButton implements MouseListener {
 		addMouseListener(this);
 	}
 
-    /** 表示する数を0にする,演算子を未設定にする */
+    /** 表示する数を0にする */
 	public void mouseClicked(MouseEvent e) {
 		textField.clear();
 	}
