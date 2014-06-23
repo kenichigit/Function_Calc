@@ -1,5 +1,6 @@
 /*演算子*/
 import javax.swing.*;
+
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 
@@ -32,15 +33,25 @@ public class OpButton extends JButton implements MouseListener {
 		/**表示する数の桁を増やす*/
 		textField.addString(operator);
 		
-		Calc.last_click = 'O';
-		
-		/**後置記法の為の操作*/
-		textField.RPN_transform(operator);
-		
-		textField.tmp = "";
-		
-
+		if(Calc.last_click == 'F'){
+			if(operator.equals(")")){
+				
+				/*ここで関数計算してtextfield.tmpに答え入れる*/
+				textField.func_opration();
+				
+				Calc.last_click = 'P';
+			}
+		}
+		else{
+			Calc.last_click = 'O';
+			
+			/**後置記法の為の操作*/
+			textField.RPN_transform(operator);
+			
+			textField.tmp = "";
+		}
 	}
+
 	/** 今回は使用しない  */
 	public void mouseEntered(MouseEvent e) {}
 	/** 今回は使用しない  */

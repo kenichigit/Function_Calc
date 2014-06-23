@@ -1,4 +1,5 @@
 import javax.swing.*;
+
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 
@@ -35,7 +36,9 @@ public class PublicButton extends JButton implements MouseListener {
 		//桁を増やす
 		textField.addString(string);
 		
-		Calc.last_click='P';
+		if(Calc.last_click != 'F'){
+			Calc.last_click='P';
+		}
 	}
 
     /** 今回は使用しない */

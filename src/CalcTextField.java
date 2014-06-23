@@ -12,6 +12,7 @@ public class CalcTextField extends JTextField{
 	String[] op = new String[100];		//一時的に演算子,「()」を格納する配列
 	int i = 0,j = 0;
 	boolean[] flag = new boolean[100];
+	String func;
 
 	
 	public CalcTextField() {
@@ -139,5 +140,43 @@ public class CalcTextField extends JTextField{
 			}
 			else i++;	//計算が行われなかったら、次を検索
 		}	
+	}
+
+	
+	public void func_opration() {
+		// TODO 自動生成されたメソッド・スタブ
+		if(this.tmp.equals("e"))this.tmp = ""+Math.E;
+		if(this.tmp.equals("π"))this.tmp = ""+Math.PI;
+		
+		if(func.equals("sin")){
+			this.tmp = ""+Math.sin(Double.parseDouble(this.tmp));
+		}
+		if(func.equals("cos")){
+			this.tmp = ""+Math.cos(Double.parseDouble(this.tmp));
+		}
+		if(func.equals("tan")){
+			this.tmp = ""+Math.tan(Double.parseDouble(this.tmp));
+		}
+		if(func.equals("asin")){
+			this.tmp = ""+Math.asin(Double.parseDouble(this.tmp));
+		}
+		if(func.equals("acos")){
+			this.tmp = ""+Math.acos(Double.parseDouble(this.tmp));
+		}
+		if(func.equals("atan")){
+			this.tmp = ""+Math.atan(Double.parseDouble(this.tmp));
+		}
+		if(func.equals("log")){
+			this.tmp = ""+Math.log10(Double.parseDouble(this.tmp));
+		}
+		if(func.equals("lg")){
+			this.tmp = ""+Math.log(Double.parseDouble(this.tmp)) / Math.log(2.0);
+		}
+		if(func.equals("ln")){
+			this.tmp = ""+Math.log(Double.parseDouble(this.tmp));
+		}
+		if(func.equals("√")){
+			this.tmp = ""+Math.sqrt(Double.parseDouble(this.tmp));
+		}
 	}
 }

@@ -41,10 +41,6 @@ public class EqualButton extends JButton implements MouseListener {
 		/**計算を行う*/
 		textField.operation(textField.RPN, textField.flag);
 		
-		if(Double.parseDouble(textField.RPN[0]) >= 1000000000){
-			textField.RPN[0] = Double.parseDouble(textField.RPN[0])/100 + "*10^9";
-		}
-		
 		textField.setText(textField.RPN[0]);
 		
 		textField.tmp = "";

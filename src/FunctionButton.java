@@ -21,8 +21,9 @@ public class FunctionButton extends JButton implements MouseListener {
 
 	/**関数ボタンがクリックされたときに表示する数クラスに渡す*/
 	public void mouseClicked(MouseEvent e) {
-		textField.addString(func);
-		Calc.last_click = 'F';	
+		textField.addString(func+"(");
+		Calc.last_click = 'F';
+		textField.func = this.func;
 	}
     /** 今回は使用しない */
 	public void mouseEntered(MouseEvent e) {}
