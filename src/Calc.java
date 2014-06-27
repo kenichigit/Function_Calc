@@ -60,9 +60,9 @@ public class Calc extends JFrame {
 		opButton[1] = new OpButton("-", textField);
 		opButton[2] = new OpButton("*", textField);
 		opButton[3] = new OpButton("/", textField);
-		opButton[4] = new OpButton("^",  textField);
-		opButton[5] = new OpButton("(",  textField);
-		opButton[6] = new OpButton(")",  textField);
+		opButton[4] = new OpButton("^", textField);
+		opButton[5] = new OpButton("(", textField);
+		opButton[6] = new OpButton(")", textField);
 
 		equalButton = new EqualButton(textField);
 

@@ -7,17 +7,13 @@ import java.util.Arrays;
 /**イコ-ルボタンクラス
  * 演算器(ArithmeticUnit)に演算を行わせるクラス。
  * JButtonを拡張したクラスであり，MouseListenerインタ-フェ-スを実装している。
- * プッシュボタンの「=」を押されることにより演算器クラス(ArithmeticUnit)に演算を行わせる。
  * */
 public class EqualButton extends JButton implements MouseListener {
 
-    /** 
-     * 演算器に受け渡すために用意した属性
-     */
 	private CalcTextField textField;
 
     /** 
-     * =ボタンを使えるようにする。
+     * 「=」ボタンを使えるようにする。
      * @param arithmUnit 
      */
 	EqualButton(CalcTextField textField) {
@@ -26,14 +22,12 @@ public class EqualButton extends JButton implements MouseListener {
 		addMouseListener(this);
 	}
 
-	  /** コンポ-ネント上でマウスボタンがクリックされたときに動作し、
-     * 演算器(ArithmeticUnit)に演算を行わせ、
-     * 表示する数(DisplayedNumber)に演算器(ArithmeticUnit)から読み出した値を代入させる。 */
+	  /** コンポ-ネント上でマウスボタンがクリックされたときに動作 */
 	public void mouseClicked(MouseEvent e) {		
 
 		Calc.last_click ='=';
 		
-		/**後置記法に変換*/
+		/**後置記法に変換する*/
 		textField.RPN_transform("=");
 		
 		System.out.println(Arrays.toString(textField.RPN));	//確認用
@@ -43,8 +37,9 @@ public class EqualButton extends JButton implements MouseListener {
 		
 		textField.setText(textField.RPN[0]);
 		
-		textField.tmp = "";
+		textField.tmp = textField.RPN[0];
 		
+		textField.i = textField.j = 0;
 	}
     /** 今回は使用しない */
 	public void mouseEntered(MouseEvent e) {}
