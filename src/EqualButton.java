@@ -11,13 +11,15 @@ import java.util.Arrays;
 public class EqualButton extends JButton implements MouseListener {
 
 	private CalcTextField textField;
+	private ArithmeticUnit arithmUnit;
 
     /** 
      * 「=」ボタンを使えるようにする。
      * @param arithmUnit 
      */
-	EqualButton(CalcTextField textField) {
+	EqualButton(CalcTextField textField,ArithmeticUnit arithmUnit) {
 		super("=");
+		this.arithmUnit = arithmUnit;
 		this.textField = textField;
 		addMouseListener(this);
 	}
@@ -33,7 +35,7 @@ public class EqualButton extends JButton implements MouseListener {
 		System.out.println(Arrays.toString(textField.RPN));	//確認用
 		
 		/**計算を行う*/
-		textField.operation(textField.RPN, textField.flag);
+		arithmUnit.operation(textField.RPN, textField.flag);
 		
 		textField.setText(textField.RPN[0]);
 		

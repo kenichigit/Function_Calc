@@ -11,10 +11,12 @@ public class OpButton extends JButton implements MouseListener {
 	private String operator;
 	/** 演算器クラス(ArithmeticUnit)とのメッセージの受け渡しのために用意された属性  */
 	private CalcTextField textField;
+	private ArithmeticUnit arithmUnit;
 	
 	/** 演算記号ボタンを使えるようにする。  */
-	OpButton(String opStr, CalcTextField textField) {
+	OpButton(String opStr, CalcTextField textField, ArithmeticUnit arithmUnit) {
 		super(opStr);
+		this.arithmUnit = arithmUnit;
 		this.operator = opStr;
 		this.textField = textField;
 		addMouseListener(this);
@@ -39,7 +41,7 @@ public class OpButton extends JButton implements MouseListener {
 			if(operator.equals(")")){
 				
 				/*ここで関数計算してtextfield.tmpに答え入れる*/
-				textField.func_opration();
+				arithmUnit.func_opration();
 				
 				Calc.last_click = 'P';
 			}

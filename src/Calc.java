@@ -18,6 +18,8 @@ public class Calc extends JFrame {
 	private ClearButton clearButton;
 	/**表示/入力画面*/
 	private CalcTextField textField = new CalcTextField();
+	/**演算機ボタン*/
+	private ArithmeticUnit arithmUnit = new ArithmeticUnit(textField);
 	/** 最後にクリックされたボタン */
 	public static char last_click;
 
@@ -56,15 +58,15 @@ public class Calc extends JFrame {
 		funButton[8] = new FunctionButton("lg", textField); // log_2
 		funButton[9] = new FunctionButton("√", textField); //平方根
 
-		opButton[0] = new OpButton("+", textField);
-		opButton[1] = new OpButton("-", textField);
-		opButton[2] = new OpButton("*", textField);
-		opButton[3] = new OpButton("/", textField);
-		opButton[4] = new OpButton("^", textField);
-		opButton[5] = new OpButton("(", textField);
-		opButton[6] = new OpButton(")", textField);
+		opButton[0] = new OpButton("+", textField,arithmUnit);
+		opButton[1] = new OpButton("-", textField,arithmUnit);
+		opButton[2] = new OpButton("*", textField,arithmUnit);
+		opButton[3] = new OpButton("/", textField,arithmUnit);
+		opButton[4] = new OpButton("^", textField,arithmUnit);
+		opButton[5] = new OpButton("(", textField,arithmUnit);
+		opButton[6] = new OpButton(")", textField,arithmUnit);
 
-		equalButton = new EqualButton(textField);
+		equalButton = new EqualButton(textField,arithmUnit);
 
 		clearButton = new ClearButton(textField);
 		
