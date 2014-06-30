@@ -18,6 +18,8 @@ public class Calc extends JFrame {
 	private ClearButton clearButton;
 	/**表示/入力画面*/
 	private CalcTextField textField = new CalcTextField();
+	/**関数内四則演算用*/
+	private CalcTextField funcCalc = new CalcTextField();
 	/**演算機ボタン*/
 	private ArithmeticUnit arithmUnit = new ArithmeticUnit(textField);
 	/** 最後にクリックされたボタン */
@@ -40,12 +42,12 @@ public class Calc extends JFrame {
 		
 		/*ボタンのインスタンス化*/
 		for (int i = 0; i < 10; i++) {
-			pubButton[i] = new PublicButton(i, textField);
+			pubButton[i] = new PublicButton(""+i, textField,funcCalc);
 			add(pubButton[i]);
 		}
-		pubButton[10] = new PublicButton("π", textField);
-		pubButton[11] = new PublicButton("e", textField);
-		pubButton[12] = new PublicButton(".",textField);
+		pubButton[10] = new PublicButton("π", textField,funcCalc);
+		pubButton[11] = new PublicButton("e", textField,funcCalc);
+		pubButton[12] = new PublicButton(".",textField,funcCalc);
 		
 		funButton[0] = new FunctionButton("sin", textField);
 		funButton[1] = new FunctionButton("cos", textField);
@@ -58,13 +60,13 @@ public class Calc extends JFrame {
 		funButton[8] = new FunctionButton("lg", textField); // log_2
 		funButton[9] = new FunctionButton("√", textField); //平方根
 
-		opButton[0] = new OpButton("+", textField,arithmUnit);
-		opButton[1] = new OpButton("-", textField,arithmUnit);
-		opButton[2] = new OpButton("*", textField,arithmUnit);
-		opButton[3] = new OpButton("/", textField,arithmUnit);
-		opButton[4] = new OpButton("^", textField,arithmUnit);
-		opButton[5] = new OpButton("(", textField,arithmUnit);
-		opButton[6] = new OpButton(")", textField,arithmUnit);
+		opButton[0] = new OpButton("+", textField,arithmUnit,funcCalc);
+		opButton[1] = new OpButton("-", textField,arithmUnit,funcCalc);
+		opButton[2] = new OpButton("*", textField,arithmUnit,funcCalc);
+		opButton[3] = new OpButton("/", textField,arithmUnit,funcCalc);
+		opButton[4] = new OpButton("^", textField,arithmUnit,funcCalc);
+		opButton[5] = new OpButton("(", textField,arithmUnit,funcCalc);
+		opButton[6] = new OpButton(")", textField,arithmUnit,funcCalc);
 
 		equalButton = new EqualButton(textField,arithmUnit);
 

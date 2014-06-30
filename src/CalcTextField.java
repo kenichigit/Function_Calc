@@ -13,6 +13,8 @@ public class CalcTextField extends JTextField{
 	String[] op = new String[100];		//一時的に演算子,「()」を格納する配列
 	int i = 0,j = 0;
 	String func;
+	/**関数内の入力かどうかのフラグ*/
+	boolean inFunction;
 
 	
 	public CalcTextField() {
@@ -67,10 +69,10 @@ public class CalcTextField extends JTextField{
 				flag[i] = false;
 	    		i++;
 	    		op[j-2] = op[j-1];
-	    		op[j-2] = null;
+	    		j--;
 		}
 		
-		if(j>=2 && (op[j-2]=="+"||op[j-2]=="-") && (op[j-1]=="+"||op[j-1]=="-"||op[j-2]=="*"||op[j-2]=="/") ){
+		if(j>=2 && (op[j-2].equals("+")||op[j-2].equals("-")) && (op[j-1].equals("+")||op[j-1].equals("-")||op[j-2].equals("*")||op[j-2].equals("/"))){
 			RPN[i] = op[j-1];
 			flag[i] = false;
 			i++;
@@ -79,7 +81,7 @@ public class CalcTextField extends JTextField{
 		}
 		
 		
-		if(operator == ")"){	//「)」が入力されたとき			
+		if(operator.equals(")")){	//「)」が入力されたとき			
 			while(op[j] != "("){	//「(」が出てくるまでRPNの後ろにopの先頭を入れる
 				RPN[i] = op[j-1];
 				flag[i] = false;
