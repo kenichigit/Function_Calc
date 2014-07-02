@@ -36,7 +36,6 @@ public class Calc extends JFrame {
 		initFields();
 		initGUI();
 	}
-	
 	/**フィ-ルドの宣言*/
 	void initFields(){
 		
